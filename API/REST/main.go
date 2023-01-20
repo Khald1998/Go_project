@@ -19,10 +19,19 @@ type State struct {
 	RES int    `json:"RES"`
 }
 
+var (
+	username = "x"
+	password = "x"
+	endpoint = "x"
+	port     = "x"
+	db_name  = "x"
+)
+
+// var DNS string = fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", username, password, endpoint, port, db_name)
 var DB *gorm.DB
 var err error
 
-const DNS = ""
+const DNS = "username:password@tcp(maindb.czpld8fke1ht.us-east-1.rds.amazonaws.com:3306)/DB"
 
 func InitRouter() {
 	router := mux.NewRouter()
@@ -42,9 +51,14 @@ func initializeRouter() {
 	}
 	DB.AutoMigrate(&State{})
 }
+func initializeDB() {
+	DB.
+
+}
 func main() {
 	InitRouter()
 	initializeRouter()
+	initializeDB()
 }
 
 func Home(w http.ResponseWriter, r *http.Request) {
