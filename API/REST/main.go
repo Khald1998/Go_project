@@ -1,88 +1,74 @@
 package main
 
 import (
-	"encoding/json"
-	"fmt"
-	"log"
 	"net/http"
+	"strconv"
 
-	"github.com/gorilla/mux"
-	"gorm.io/driver/mysql"
-	"gorm.io/gorm"
+	"github.com/gin-gonic/gin"
 )
 
-type State struct {
-	ID  int    `json:"ID"`
-	X   int    `json:"X"`
-	Y   int    `json:"Y"`
-	OP  string `json:"OP"`
-	RES int    `json:"RES"`
+// event represents data about a record album.
+type event struct {
+	ID  int `json:"ID"`
+	X   int `json:"X"`
+	Y   int `json:"Y"`
+	RES int `json:"RES"`
 }
 
-var (
-	username = "x"
-	password = "x"
-	endpoint = "x"
-	port     = "x"
-	db_name  = "x"
-)
-
-// var DNS string = fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", username, password, endpoint, port, db_name)
-var DB *gorm.DB
-var err error
-
-const DNS = "username:password@tcp(maindb.czpld8fke1ht.us-east-1.rds.amazonaws.com:3306)/DB"
-
-func InitRouter() {
-	router := mux.NewRouter()
-	router.HandleFunc("/", Home).Methods("GET")
-	router.HandleFunc("/state/get", GetState).Methods("GET")
-	router.HandleFunc("/state/get/{ID}", GetStateID).Methods("GET")
-	router.HandleFunc("/state/add", CreateState).Methods("GET")
-
-	log.Fatal(http.ListenAndServe(":8080", router))
-
+// events slice to seed record album data.
+var events = []event{
+	{ID: 0, X: 0, Y: 0, RES: 0},
+	{ID: 1, X: 1, Y: 1, RES: 2},
 }
-func initializeRouter() {
-	DB, err = gorm.Open(mysql.Open(DNS), &gorm.Config{})
-	if err != nil {
-		fmt.Println(err.Error())
-		panic("Cannot connect to DB")
-	}
-	DB.AutoMigrate(&State{})
-}
-func initializeDB() {
-	DB.
 
-}
 func main() {
-	InitRouter()
-	initializeRouter()
-	initializeDB()
+	router := gin.Default()
+	router.GET("/events/show", getEvents)
+	router.GET("/events/show/:ID", getEventsByID)
+	router.POST("/events/add", addEvents)
+
+	router.Run("localhost:8080")
 }
 
-func Home(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Welcome home!")
+// getEvents responds with the list of all events as JSON.
+func getEvents(c *gin.Context) {
+	c.IndentedJSON(http.StatusOK, events)
 }
 
-func GetState(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
-	var state []State
-	DB.Find(&state)
-	json.NewEncoder(w).Encode(state)
-}
-func GetStateID(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
-	parameter := mux.Vars(r)
-	var state State
-	DB.First(&state, parameter["ID"])
-	json.NewEncoder(w).Encode(state)
-}
-func CreateState(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
-	var state State
-	json.NewDecoder(r.Body).Decode(&state)
-	DB.Create(&state)
-	json.NewEncoder(w).Encode(state)
+// addEvents adds an event from JSON received in the request body.
+func addEvents(c *gin.Context) {
+	var newEvent event
+	// ID, _ := strconv.Atoi(events[len(events)-1].ID)
+	// ID = ID + 1
+	// X, _ := strconv.Atoi(c.Param("X"))
+	// Y, _ := strconv.Atoi(c.Param("X"))
+	// RES := X + Y
 
+	// Call BindJSON to bind the received JSON to
+	// newEvent.
+	if err := c.BindJSON(&newEvent); err != nil {
+		return
+	}
+	// newEvent.ID = strconv.Itoa(ID)
+	// newEvent.RES = strconv.Itoa(RES)
+	// Add the new event to the slice.
+	events = append(events, newEvent)
+	c.IndentedJSON(http.StatusCreated, newEvent)
+}
+
+// getEventsByID locates the event whose ID value matches the id
+// parameter sent by the client, then returns that event as a response.
+func getEventsByID(c *gin.Context) {
+	id := c.Param("ID")
+	ID, _ := strconv.Atoi(id)
+
+	// Loop through the list of events, looking for
+	// an event whose ID value matches the parameter.
+	for _, a := range events {
+		if a.ID == ID {
+			c.IndentedJSON(http.StatusOK, a)
+			return
+		}
+	}
+	c.IndentedJSON(http.StatusNotFound, gin.H{"message": "event not found"})
 }

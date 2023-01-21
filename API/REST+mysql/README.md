@@ -5,17 +5,8 @@
 ## To install Gorilla mux, write the command:
 "go get -u github.com/gin-gonic/gin"
 
-## To install CompileDaemon, write the command: "https://github.com/githubnemo/CompileDaemon"
-go get github.com/githubnemo/CompileDaemon
-go install github.com/githubnemo/CompileDaemon
-
-## To install godotenv, write the command: "https://github.com/joho/godotenv"
-go get github.com/joho/godotenv
-
-
 ## To install GORM, write the command
 "go get -u github.com/gorilla/mux"
-
 ## To install GORM, write the command:
 "go get -u gorm.io/gorm"
 ## To install the MySQL driver, write the command:
