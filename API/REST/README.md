@@ -32,8 +32,9 @@ go get github.com/joho/godotenv
 # How to install 
 
 ## step one
-
-### Run the go mod init command, giving it the path of the module your code will be in.
+### Run the go mod init command, giving it the path of the module your code will be in, in ouer case it is REST.
 <code>go mod init REST</code>
-test
+
+## step two
+
 
