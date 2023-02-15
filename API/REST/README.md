@@ -1,6 +1,4 @@
 # Create a module in which you can manage dependencies
-## Run the go mod init command, giving it the path of the module your code will be in.
-"go mod init REST"
 
 ## To install Gorilla mux, write the command:
 "go get -u github.com/gin-gonic/gin"
@@ -28,3 +26,13 @@ go get github.com/joho/godotenv
 
 ### GORM is an ORM with helper functions that carry queries or execute commands over a specific database.
 ### Now, we will create the main.go file in the rest_api directory and write the basic syntax in the main.go file.
+
+
+
+# How to install 
+
+## step one
+
+### Run the go mod init command, giving it the path of the module your code will be in.
+"go mod init REST"
+
