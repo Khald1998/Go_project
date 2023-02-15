@@ -1,6 +1,7 @@
 # What is it
 <p> A REST api that do an add operations and store the state</p>
 
+Here is the state:
 ```golang
 type event struct {
 	ID  int `json:"id"`
@@ -8,6 +9,20 @@ type event struct {
 	Y   int `json:"y"`
 	RES int `json:"res"`
 }
+```
+
+and it is going to be running on endpoint of port: 
+<code>router.Run("localhost:8080")</code>
+
+with those options:
+```golang
+	router.GET("/events/show", getEvents)
+	router.GET("/events/show/:ID", getEventsByID)
+	router.POST("/events/addJ", addJEvents)
+	router.POST("/events/addQ", addQEvents)
+	router.PUT("/events/updata", updateEvent)
+	router.DELETE("/events/delete", deleteEvent)
+
 ```
 
 
