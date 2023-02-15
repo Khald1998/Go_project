@@ -33,6 +33,6 @@ with those options:
 <code>go mod init REST</code>
 
 ### Step two
-<p> Install Gorilla mux, write the command</p>
+<p> Install Gin Web Framework, write the command</p>
 <code>go get -u github.com/gin-gonic/gin</code>
 
