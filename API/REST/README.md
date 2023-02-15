@@ -1,5 +1,13 @@
 # What is it
 <p> A REST api that do an add operations and store the state</p>
+<code>
+type event struct {
+	ID  int `json:"id"`
+	X   int `json:"x"`
+	Y   int `json:"y"`
+	RES int `json:"res"`
+}
+</code>
 
 
 ## How to install 
