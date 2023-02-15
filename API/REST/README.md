@@ -1,6 +1,7 @@
 # What is it
 <p> A REST api that do an add operations and store the state</p>
-```
+
+```golang
 type event struct {
 	ID  int `json:"id"`
 	X   int `json:"x"`
