@@ -1,4 +1,5 @@
-
+# What is it
+<p> A REST api that do an add operations and store the state</p>
 
 
 ## How to install 
