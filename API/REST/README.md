@@ -34,5 +34,5 @@ go get github.com/joho/godotenv
 ## step one
 
 ### Run the go mod init command, giving it the path of the module your code will be in.
-"go mod init REST"
+<code>go mod init REST<code>
 
